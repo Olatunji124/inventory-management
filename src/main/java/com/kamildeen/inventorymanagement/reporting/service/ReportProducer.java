@@ -1,4 +1,4 @@
-package com.kamildeen.inventorymanagement.report.service;
+package com.kamildeen.inventorymanagement.reporting.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;

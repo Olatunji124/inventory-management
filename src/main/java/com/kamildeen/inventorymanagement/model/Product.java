@@ -8,14 +8,12 @@ import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
+@AllArgsConstructor
+@Data
 public class Product {
 
 
-    @SequenceGenerator(name = "product_sequence", initialValue = 10000,
-            allocationSize = 1, sequenceName = "product_sequence")
+    @SequenceGenerator(name = "product_sequence", sequenceName = "product_sequence")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
     private Long id;
@@ -23,7 +21,7 @@ public class Product {
     private String name;
     private double price;
     @NotNull
-    private Double availableQuantity;
+    private int availableQuantity;
     private String description;
 
 }

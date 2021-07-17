@@ -19,7 +19,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping(path = "/add-product")
-    public ResponseEntity<Product> addProducts(@RequestBody Product product){
+    public ResponseEntity<Product> addProduct(@RequestBody Product product){
         return ResponseEntity.status(HttpStatus.OK).body(productService.addProduct(product));
     }
 
@@ -28,10 +28,11 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productService.getById(id));
     }
 
-//    @GetMapping("/{productName}")
-//    public ResponseEntity<Product> getProductByName(@PathVariable String productName){
-//        return ResponseEntity.status(HttpStatus.OK).body(productService.getByName(productName));
-//    }
+    @Deprecated
+    @GetMapping("/{productName}")
+    public ResponseEntity<Product> getProductByName(@PathVariable String productName){
+        return ResponseEntity.status(HttpStatus.OK).body(productService.getByName(productName));
+    }
 
     @GetMapping("/product-list")
     public ResponseEntity<List<Product>> getAllProducts(){

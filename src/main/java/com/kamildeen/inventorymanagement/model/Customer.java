@@ -1,5 +1,6 @@
 package com.kamildeen.inventorymanagement.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,9 +11,10 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Customer implements Serializable {
 
-    @SequenceGenerator(name = "customer_id_sequence", sequenceName = "customer_id_sequence", initialValue = 1000)
+    @SequenceGenerator(name = "customer_id_sequence", sequenceName = "customer_id_sequence")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_sequence")
     private Long id;

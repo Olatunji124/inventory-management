@@ -1,9 +1,10 @@
-package com.kamildeen.inventorymanagement.service;
+package com.kamildeen.inventorymanagement.service.implementation;
 
 import com.kamildeen.inventorymanagement.model.*;
 import com.kamildeen.inventorymanagement.repository.CartRepository;
 import com.kamildeen.inventorymanagement.repository.CustomerRepository;
 import com.kamildeen.inventorymanagement.repository.ProductRepository;
+import com.kamildeen.inventorymanagement.service.CartService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CartServiceImpl implements CartService{
+public class CartServiceImpl implements CartService {
 
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
@@ -78,7 +79,7 @@ public class CartServiceImpl implements CartService{
         try {
             Customer customer = getCustomerByPhone(addToCartDTO.getCustomerPhone());
             Product product = getProduct(addToCartDTO.getProductId());
-            Cart cart = cartRepository.findByCustomerAndAndProduct(customer, product);
+            Cart cart = cartRepository.findByCustomerAndProduct(customer, product);
             cart.setCreatedDate(new Date());
             if(addToCartDTO.getQuantity() > cart.getQuantity()){
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sorry, we have limited stocks available");

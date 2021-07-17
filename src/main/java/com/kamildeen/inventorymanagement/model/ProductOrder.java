@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Data
-@Setter
 public class ProductOrder {
 
     @SequenceGenerator(name = "order_id_sequence", sequenceName = "order_id_sequence", initialValue = 1000)

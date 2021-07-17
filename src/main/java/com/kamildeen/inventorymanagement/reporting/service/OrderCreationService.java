@@ -1,4 +1,4 @@
-package com.kamildeen.inventorymanagement.report.service;
+package com.kamildeen.inventorymanagement.reporting.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,7 +40,7 @@ public class OrderCreationService {
 
     public List<ProductOrder> getOrders(String customerPhone) {
         Customer customer = getCustomerByPhone(customerPhone);
-        List<ProductOrder> orderList = orderRepository.findAllByCustomerOrderByOrderDateDesc(customer);
+        List<ProductOrder> orderList = orderRepository.findAllByCustomerOrderByBetweenDates(customer);
         return orderList;
     }
 

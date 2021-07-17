@@ -10,4 +10,5 @@ class InventoryManagementApplicationTests {
 	void contextLoads() {
 	}
 
+
 }

@@ -23,8 +23,8 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).body(cartService.addItemToCart(addToCartDTO));
     }
 
-    @GetMapping("/get-cart-item/{phone}")
-    public ResponseEntity<CartDTO> getAllCart(@PathVariable("phone") String phone) {
+    @GetMapping("/get-cart-items/{phone}")
+    public ResponseEntity<CartDTO> getAllCartItems(@PathVariable("phone") String phone) {
         return ResponseEntity.status(HttpStatus.OK).body(cartService.getAllCartItems(phone));
     }
 
@@ -34,7 +34,7 @@ public class CartController {
     }
 
     @DeleteMapping("/delete-cart-items/{id}")
-    public ResponseEntity<Integer> deleteAllCart(@PathVariable("id") Long id) {
+    public ResponseEntity<Integer> deleteAllCartItems(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(cartService.deleteCartItem(id));
     }
 

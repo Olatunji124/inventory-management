@@ -1,9 +1,11 @@
-package com.kamildeen.inventorymanagement.service;
+package com.kamildeen.inventorymanagement.service.implementation;
 
 import com.kamildeen.inventorymanagement.model.*;
-import com.kamildeen.inventorymanagement.report.service.ReportConsumer;
+import com.kamildeen.inventorymanagement.reporting.service.ReportConsumer;
 import com.kamildeen.inventorymanagement.repository.CustomerRepository;
 import com.kamildeen.inventorymanagement.repository.OrderRepository;
+import com.kamildeen.inventorymanagement.service.CartService;
+import com.kamildeen.inventorymanagement.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -60,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 
     public List<ProductOrder> listOrders(String customerPhone) {
         Customer customer = getCustomerByPhone(customerPhone);
-        List<ProductOrder> orderList = orderRepository.findAllByCustomerOrderByOrderDateDesc(customer);
+        List<ProductOrder> orderList = orderRepository.findAllByCustomerOrderByBetweenDates(customer);
         return orderList;
     }
 

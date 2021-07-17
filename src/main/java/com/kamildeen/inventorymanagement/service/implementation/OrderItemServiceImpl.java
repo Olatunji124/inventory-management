@@ -1,4 +1,4 @@
-package com.kamildeen.inventorymanagement.service;
+package com.kamildeen.inventorymanagement.service.implementation;
 
 import com.kamildeen.inventorymanagement.model.OrderItem;
 import com.kamildeen.inventorymanagement.repository.OrderItemRepository;

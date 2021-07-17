@@ -13,8 +13,8 @@ public class Producer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void publishToTopic(String message){//(List<ProductOrder> message) {
-        System.out.println("Publishing to topic "+TOPIC);
+    public void publishToTopic(String message){
+
         this.kafkaTemplate.send(TOPIC, message);
     }
 }

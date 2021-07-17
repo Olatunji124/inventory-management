@@ -1,4 +1,4 @@
-package com.kamildeen.inventorymanagement.report.service;
+package com.kamildeen.inventorymanagement.reporting.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +8,7 @@ import com.kamildeen.inventorymanagement.model.OrderItem;
 import com.kamildeen.inventorymanagement.model.ProductOrder;
 import com.kamildeen.inventorymanagement.repository.OrderRepository;
 import com.kamildeen.inventorymanagement.service.CartService;
-import com.kamildeen.inventorymanagement.service.OrderItemServiceImpl;
+import com.kamildeen.inventorymanagement.service.implementation.OrderItemServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ReportConsumer {
     private final CartService cartService;
     private final OrderItemServiceImpl orderItemService;
 
-    @KafkaListener(topics="kafka-order", groupId="kafka-order-group")
+    @KafkaListener(topics="kafka-order", groupId="kafka-order-group", containerFactory = "kafkaListenerContainerFactory")
     public void consumeFromTopic(String message) throws JsonProcessingException {
 
 

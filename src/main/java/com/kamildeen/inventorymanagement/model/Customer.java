@@ -1,5 +1,6 @@
 package com.kamildeen.inventorymanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,8 @@ public class Customer implements Serializable {
     @Column(name = "email")
     private  String email;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<ProductOrder> order;
 
     public Customer(String firstName, String lastName, String phone, String email) {

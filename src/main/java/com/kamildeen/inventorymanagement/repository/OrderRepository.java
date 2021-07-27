@@ -15,8 +15,10 @@ import java.util.List;
 @Transactional
 public interface OrderRepository extends JpaRepository<ProductOrder, Long> {
 
-    @Query(value = "SELECT * FROM ProductOrder p WHERE p.customer=?1 AND p.orderDate >= :startDate AND p.orderDate <= :endDate", nativeQuery = true)
-    List<ProductOrder> findAllByCustomerOrderByBetweenDates(Customer customer,
-                                                            @Param("startDate") Date startDate,
-                                                            @Param("endDate") Date endDate);
+    //@Query(value = "SELECT * FROM ProductOrder p WHERE p.customer=?1A AND p.orderDate >= :startDate AND p.orderDate <= :endDate", nativeQuery = true)
+    List<ProductOrder> findAllByCustomerAndOrderDateBetween(Customer customer,
+                                                             Date startDate,
+                                                            Date endDate);
+
+    List<ProductOrder> findAllByCustomerOrderByOrderDateDesc(Customer customer);
 }

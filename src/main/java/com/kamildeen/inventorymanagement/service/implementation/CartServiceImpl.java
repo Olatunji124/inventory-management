@@ -36,7 +36,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<Cart> addItemToCart(AddToCartDTO addToCartDTO) {
+    public CartResponseDTO addItemToCart(AddToCartDTO addToCartDTO) {
 
         Product product = getProduct(addToCartDTO.getProductId());
         Customer customer = getCustomerByPhone(addToCartDTO.getCustomerPhone());
@@ -46,7 +46,9 @@ public class CartServiceImpl implements CartService {
         }
         Cart cart = new Cart(new Date(), product, customer, addToCartDTO.getQuantity());
         cartRepository.save(cart);
-        return cartRepository.findAll();
+        List<Cart> cartItems = cartRepository.findAllByCustomerOrderByCreatedDateDesc(customer);
+        CartResponseDTO resp = new CartResponseDTO(customer, cartItems);
+        return resp;
     }
 
     private static CartItemDTO getDTOFromCart(Cart cart){

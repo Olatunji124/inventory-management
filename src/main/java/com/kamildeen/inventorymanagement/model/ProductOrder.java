@@ -22,7 +22,7 @@ public class ProductOrder {
     private Date orderDate;
 
     @ManyToOne
-    @JsonIgnore
+    //@JsonIgnore
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 

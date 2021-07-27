@@ -40,7 +40,7 @@ class ProductServiceImplTest {
     @Test
     void addProduct() {
         //given
-        Product product = new Product(null, "X-Guitars", 200, 5.0, "Awesome");
+        Product product = new Product(null, "X-Guitars", 200, 5, "Awesome");
 
         //when
         underTest.addProduct(product);
@@ -61,7 +61,7 @@ class ProductServiceImplTest {
     void getByName() {
         //given
         String name = "HB-Pencil";
-        Product product = new Product(null, name, 200, 5.0, "Awesome");
+        Product product = new Product(null, name, 200, 5, "Awesome");
 
 
         //when

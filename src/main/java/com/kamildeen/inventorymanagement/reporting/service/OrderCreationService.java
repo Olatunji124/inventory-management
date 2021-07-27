@@ -8,11 +8,13 @@ import com.kamildeen.inventorymanagement.repository.OrderRepository;
 import com.kamildeen.inventorymanagement.service.CartService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @AllArgsConstructor
@@ -24,23 +26,25 @@ public class OrderCreationService {
     private final OrderRepository orderRepository;
 
 
-    public String createOrder(String customerPhone) throws JsonProcessingException {
+    @Async
+    public synchronized CompletableFuture<String> createOrder(String customerPhone) {
         CartDTO cartDTO = cartService.getAllCartItems(customerPhone);
-        Customer customer = getCustomerByPhone(customerPhone);
         PlaceOrderDTO placeOrderDTO = new PlaceOrderDTO();
-        placeOrderDTO.setCustomer(customer);
+        placeOrderDTO.setCustomer(cartDTO.getCustomer());
         placeOrderDTO.setTotalAmount(cartDTO.getTotalAmount());
         placeOrderDTO.setOrderDate(new Date());
-
-        String order = toString(placeOrderDTO);
+        System.out.println("==========Order placed 1");
+        String order = convertToString(placeOrderDTO);
+        System.out.println("==========Order placed");
         producer.publishToTopic(order);
+        System.out.println("==========Order published to kafka");
 
-        return "Order Placed";
+        return CompletableFuture.completedFuture(order);
     }
 
-    public List<ProductOrder> getOrders(String customerPhone) {
+    public List<ProductOrder> getOrders(String customerPhone, Date startDate, Date endDate) {
         Customer customer = getCustomerByPhone(customerPhone);
-        List<ProductOrder> orderList = orderRepository.findAllByCustomerOrderByBetweenDates(customer);
+        List<ProductOrder> orderList = orderRepository.findAllByCustomerAndOrderDateBetween(customer,startDate, endDate);
         return orderList;
     }
 
@@ -51,9 +55,17 @@ public class OrderCreationService {
 
     }
 
-    private String toString(PlaceOrderDTO placeOrderDTO) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = objectMapper.writeValueAsString(placeOrderDTO);
-        return jsonString;
+    private String convertToString(PlaceOrderDTO placeOrderDTO)  {
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonString = objectMapper.writeValueAsString(placeOrderDTO);
+            System.out.println(jsonString);
+            return jsonString;
+        } catch (JsonProcessingException ex){
+            ex.getMessage();
+            ex.printStackTrace();
+            return "Error";
+        }
     }
 }

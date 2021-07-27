@@ -3,6 +3,7 @@ package com.kamildeen.inventorymanagement.controller;
 import com.kamildeen.inventorymanagement.model.AddToCartDTO;
 import com.kamildeen.inventorymanagement.model.Cart;
 import com.kamildeen.inventorymanagement.model.CartDTO;
+import com.kamildeen.inventorymanagement.model.CartResponseDTO;
 import com.kamildeen.inventorymanagement.service.CartService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/add-item")
-    public ResponseEntity<List<Cart>> addToCart(@RequestBody AddToCartDTO addToCartDTO){
+    public ResponseEntity<CartResponseDTO> addToCart(@RequestBody AddToCartDTO addToCartDTO){
         return ResponseEntity.status(HttpStatus.OK).body(cartService.addItemToCart(addToCartDTO));
     }
 

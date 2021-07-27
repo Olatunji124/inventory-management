@@ -4,6 +4,7 @@ import com.kamildeen.inventorymanagement.model.*;
 import com.kamildeen.inventorymanagement.reporting.service.ReportConsumer;
 import com.kamildeen.inventorymanagement.repository.CustomerRepository;
 import com.kamildeen.inventorymanagement.repository.OrderRepository;
+import com.kamildeen.inventorymanagement.repository.ProductRepository;
 import com.kamildeen.inventorymanagement.service.CartService;
 import com.kamildeen.inventorymanagement.service.OrderService;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemServiceImpl orderItemService;
     private final CustomerRepository customerRepository;
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
     private Customer getCustomerByPhone(String phone){
         return customerRepository.findByPhone(phone)
@@ -47,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
         placeOrderDTO.setTotalAmount(cartDTO.getTotalAmount());
 
         ProductOrder newOrder = saveOrder(placeOrderDTO);
-        ReportConsumer.saveOrderItems(newOrder, customerPhone, cartDTO, orderItemService, cartService);
+        ReportConsumer.saveOrderItems(newOrder, customerPhone, cartDTO, orderItemService, cartService, productRepository);
         return "Order Placed";
     }
 
@@ -62,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 
     public List<ProductOrder> listOrders(String customerPhone) {
         Customer customer = getCustomerByPhone(customerPhone);
-        List<ProductOrder> orderList = orderRepository.findAllByCustomerOrderByBetweenDates(customer);
+        List<ProductOrder> orderList = orderRepository.findAllByCustomerOrderByOrderDateDesc(customer);
         return orderList;
     }
 

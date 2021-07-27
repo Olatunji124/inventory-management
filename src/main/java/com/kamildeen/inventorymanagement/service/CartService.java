@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CartService {
 
-    List<Cart> addItemToCart(AddToCartDTO addToCartDTO);
+    CartResponseDTO addItemToCart(AddToCartDTO addToCartDTO);
     CartDTO getAllCartItems(String phoneNo);
     int updateCartItem(AddToCartDTO addToCartDTO);
     int deleteCartItem(Long cartId);
